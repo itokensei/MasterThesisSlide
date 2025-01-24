@@ -1,0 +1,295 @@
+\documentclass{beamer} % スライド用のレイアウト
+% \documentclass[dvipdfmx,cjk]{beamer} 
+% \documentclass[dvipdfm,cjk]{beamer} %% オプションは環境や利用するプログラムに
+% \documentclass[dvips,cjk]{beamer}   %% よって変える
+
+% \AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} %% しおりが文字化けしないように
+% \AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
+
+\usepackage{luatexja} % Beamer単体では日本語を出力できないのでこれを使う
+%\renewcommand{\kanjifamilydefault}{\gtdefault} % 漢字をゴシック体に指定
+
+% \setbeamertemplate{navigation symbols}{} %% 右下のアイコンを消す
+
+% \usetheme[block=fill]{metropolis} % usepackageじゃなくてusethemeだから注意
+\usetheme{Madrid}             %% theme の選択
+% \usetheme{Boadilla}           %% Beamer のディレクトリの中の
+% \usetheme{CambridgeUS}        %% Madrid.sty を指定
+% \usetheme{Antibes}            %% 色々と試してみるといいだろう
+% \usetheme{Montpellier}        %% サンプルが beamer\doc に色々とある．
+% \usetheme{Berkeley}
+% \usetheme{Goettingen}
+% \usetheme{Singapore}
+% \usetheme{Szeged}
+
+% \usecolortheme{rose}          %% colortheme を選ぶと色使いが変わる
+% \usecolortheme{albatross}
+
+% \useoutertheme{shadow}                 %% 箱に影をつける
+% \usefonttheme{professionalfonts}       %% 数式の文字を通常の LaTeX と同じにする
+
+% \setbeamercovered{transparent}         %% 消えている文字をうっすらと表示する
+
+\setbeamertemplate{theorems}[numbered]  %% 定理に番号をつける
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{proposition}[thm]{Proposition}
+\theoremstyle{example}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{question}[thm]{Question}
+\newtheorem{prob}[thm]{Problem}
+
+% \definecolor{katsuobushi}{HTML}{cd853f} % HTMLカラーコードで指定
+% \setbeamercolor{frametitle}{bg=katsuobushi} % bgをfgにすると文字色が変わる
+% {block title} % 全ブロックのタイトル．これのbgを指定するとブロックの本文もこれを薄くした色になる
+% {block body} % 全ブロックの本文．
+% {block title alarted} % alartblockのタイトル
+% {block body alarted} % 同上本文
+% {block title example} % exampleblockのタイトル
+% {block body example} % 同上本文
+% {normal text} % 本文．これのbgを指定するとスライドの背景色が変わる
+
+\title{線型ホモトピー型理論を動機付けする\\
+トポロジカル量子コンパイルの形式検証に向けて}
+\author{322301073 伊藤 賢世}
+\date{2025年1月30日}
+
+\begin{document}
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\section{イントロダクション}
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{block}{修論内容：サーベイ}
+    Hisham Satiらの研究プロジェクト
+    \begin{center}
+      Quantum Certification
+      via Linear Homotopy Types
+    \end{center}
+    を理解するための\alert{トポロジカル量子コンパイル}について
+  \end{block}
+  \begin{block}{研究概要}
+    \begin{description}
+      \item[主張] 信頼性のある量子計算を実現するための
+        検証言語「QS」 と
+        その基礎理論「線型ホモトピー型理論（LHoTT）」の提唱.
+      \item[研究者] Hisham Sati，Urs Schreiber，David J. Meyer，\(\ldots\)
+      \item[拠点] ニューヨーク大学アブダビ校
+        Center for Quantum and
+        Topological Systems (CQTS)
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{block}{重要課題：量子コンピュータの実現}
+    \begin{itemize}
+      \item 量子コンピュータ\(=\)量子力学の原理を活用した計算機．
+      \item いくつかの計算について，
+            普及している（古典）コンピュータの性能を
+            凌駕する量子コンピュータ上のアルゴリズムが見つかっている．
+      \item MicrosoftやGoogleなども巨額の投資．
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)
+      量子コンピュータの実現に対する期待は計り知れない．
+    \end{center}
+  \end{block}
+
+  \begin{block}{計算の信頼性における課題①：Decoherence}
+    \begin{itemize}
+      \item 量子コンピュータのデータ\(=\)量子系の状態
+            （\alert{量子ビット}）．
+      \item 量子状態は外部環境の影響で壊れやすい
+            （\alert{Decoherence問題}）．
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)
+      エラーが多く，アルゴリズム通りに計算を実行させることは難しい．
+    \end{center}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{block}{アプローチ①：エラーの訂正}
+    \begin{itemize}
+      \item 古典コンピュータでも物理レベルではエラーが起きている．
+            \begin{itemize}
+              \item データに冗長性をもたせて，データを復元
+                    （誤り訂正理論）．
+            \end{itemize}
+      \item 量子ビットを増やして，
+            量子コンピュータにも応用（量子誤り訂正）．
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)
+      量子ビットを大規模に用意する問題に至る．
+    \end{center}
+  \end{block}
+
+  \begin{block}{アプローチ②：エラーの低減}
+    \begin{itemize}
+      \item \alert{トポロジカル量子計算}\(=\)
+            トポロジカルな情報で量子状態を構成．
+      \item Decoherenceに影響されにくく，エラーが減る．
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)
+      訂正のための冗長な量子ビットは少なくて済む．
+    \end{center}
+  \end{block}
+
+  \begin{block}{}
+    ①と②を組み合わせて，decoherenceに対処．
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{exampleblock}{コンパイル}
+    あるプログラミング言語で書かれたコードを
+    別の言語のコードに変換すること．
+    特に，実行可能なコードに変換すること．
+    実行前に最適化が施されている．
+    \begin{description}
+      \item[Cコンパイラ] C言語→アセンブリ言語
+      \item[アセンブラ] アセンブリ言語→機械語
+    \end{description}
+    古典コンピュータは最終的に機械語を実行している．
+  \end{exampleblock}
+
+  \begin{block}{量子コンパイル}
+    \begin{description}
+      \item[ソフトウェア側] 量子アルゴリズムを量子回路で記述する．
+      \item[ハードウェア側] 実行可能な量子回路．
+    \end{description}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{block}{量子コンパイルのアルゴリズム}
+    \begin{itemize}
+      \item 任意の実行可能な量子回路を用意するのは現実的でない．
+      \item 量子回路を構成する基本要素を準備して，固定する\\
+            （有限個の\alert{基本ゲート}）．
+      \item 基本ゲートの組み合わせで，
+            任意の量子アルゴリズムを正確に\\
+            シミュレートすることはできない．
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)
+      任意の精度で\alert{近似的に}シュミレートする．\\
+      （cf. Solovey・Kitaevアルゴリズム）
+    \end{center}
+  \end{block}
+
+  \begin{block}{課題①の先：トポロジカル量子コンパイル}
+    トポロジカル量子コンピュータの量子コンパイル．
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{alertblock}{計算の信頼性における課題②：コンパイルの正しさ}
+    古典計算では，コンパイルの正しさが検証されている．
+    \begin{itemize}
+      \item コンパイルの仕様を検証言語で記述
+      \item cf. Cコンパイラは検証言語「Coq」で検証されている．
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)
+      トポロジカル量子コンパイルの近似精度も検証したい．
+    \end{center}
+  \end{alertblock}
+
+  \begin{block}{Satiらの提案：線型ホモトピー型理論（LHoTT）}
+    \begin{itemize}
+      \item 前提
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)結論
+    \end{center}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{block}{タイトル}
+    \begin{itemize}
+      \item 前提
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)結論
+    \end{center}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{一枚目のスライド}
+  普通に文中で\LaTeX コマンドが使用できます．（そらそう）
+  \begin{block}{ブロックのタイトル}
+    block環境を作成しbeginの第二引数にタイトルを渡すとこうなります．
+  \end{block}
+  \begin{alertblock}{アラート}
+    alertblockを指定するとこんな風になります．
+  \end{alertblock}
+  \begin{exampleblock}{例}
+    exampleblockを指定するとこうなります．
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}
+  \frametitle{横並べ}
+  スライドで左右比較するときなどにこのようにします
+  \begin{columns}
+    \begin{column}{.4\linewidth} % 現在の環境の幅の0.4(=40%)の意
+      \begin{block}{内容1}
+        内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1
+      \end{block}
+    \end{column}
+    \begin{column}{.4\linewidth}
+      \begin{block}{内容2}
+        内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2
+      \end{block}
+    \end{column}
+  \end{columns}
+  このとき各columnの幅は合計100\%にしてしまうとデザイン的にあんまよくないです
+\end{frame}
+
+\begin{frame}
+  \frametitle{Overlay}
+  \begin{itemize}
+    \item 一個目
+          \pause % このコマンドを打つごとに一時停止する
+    \item 二個目
+          \pause
+    \item 三個目
+          \pause
+    \item 四個目
+  \end{itemize}
+\end{frame}
+
+\begin{itemize}
+  \item<1-> 一個目（一画面目以降表示）
+  \item<2-> 二個目（二画面目以降表示）
+  \item<3-> 三個目（三画面目以降表示）
+  \item<1-2> 四個目（二画面目まで表示）
+\end{itemize}
+
+\begin{frame}
+  \frametitle{Item以外のOverlay}
+  \begin{block}{常に表示1}
+  \end{block}
+  \uncover<2->{二画面目以降のみ表示(uncover)}
+  \begin{block}{常に表示2}
+  \end{block}
+  \only<2->{二画面目以降のみ表示(only)}
+  \begin{block}{常に表示3}
+  \end{block}
+\end{frame}
+\end{document}
