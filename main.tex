@@ -222,6 +222,10 @@
   \end{block}
 \end{frame}
 
+% 量子回路などの図を入れる
+% コンパイルの全体図とSKアルゴリズムの部分
+% トポロジカル量子コンパイル
+
 \section{イントロダクション}
 \begin{frame}[noframenumbering]{目次}
   \tableofcontents[currentsection]
@@ -365,12 +369,12 @@
     \begin{center}
       \(\longrightarrow\)
       任意の精度で\alert{近似的に}シュミレートする．\\
-      （cf. \structure{Solovey・Kitaevアルゴリズム}）
+      （cf. \structure{Solovay・Kitaevアルゴリズム}）
     \end{center}
   \end{block}
 
   \begin{alertblock}{注意}
-    後半では，Solovey・Kitaevアルゴリズムを説明する．
+    後半では，Solovay・Kitaevアルゴリズムを説明する．
   \end{alertblock}
 
   \begin{block}{課題①の先：トポロジカル量子コンパイル}
@@ -432,7 +436,10 @@
       d(U,V):=||U-V||=\sup_{||\psi||=1}||(U-V)\ket{\psi}||
     \]
   \end{dfn}
+\end{frame}
 
+\begin{frame}
+  \frametitle{量子コンパイル}
   \begin{dfn}[Universal set]
     ゲートの集合\(\mathcal{G}\)が\(U(d)\)に対して
     \structure{万能(universal)}であるとは，
@@ -443,12 +450,29 @@
     \structure{\(\epsilon\)近似列}といい，
     \(l\)を長さという．
   \end{dfn}
+
+  \begin{alertblock}{注意}
+    ゲート集合のuniversalityは
+    \[
+      \forall U\in U(d),\exists l\in\N,\ldots
+    \]
+    という形の主張である．
+  \end{alertblock}
 \end{frame}
 
+% \begin{frame}{量子コンパイル}
+%   \begin{exampleblock}{例}
+%     \(\set{H,CNOT,T}\)は\(U(d)\)に対して万能である．
+%   \end{exampleblock}
+% \end{frame}
+
 \begin{frame}{量子コンパイル}
-  ユニタリ変換\(U\)は，
+  ユニタリ変換は，
   物理的な意味を持たない大域的な相を無視して，
   特殊ユニタリ行列の積に分解できる．
+  % \begin{prop}
+  %   任意の\(U\in U(2)\)に対してある
+  % \end{prop}
   よって，特殊ユニタリ行列が近似できればよい．
   \begin{dfn}[Instruction set]
     ゲートの有限集合\(\mathcal{G}\)が\structure{instruction set}であるとは，次の3つの条件を満たすことである．
@@ -461,9 +485,7 @@
 \end{frame}
 
 \begin{frame}{量子コンパイル}
-  ゲート集合のuniversalityは任意の\(U\in SU(d)\)に対して，
-  ある長さ\(l\)が存在したが，
-  instruction setであることを仮定すると，
+  このinstruction setを仮定すると，
   その長さの上限が\(\epsilon\)を用いて与えられる．
   \begin{thm}[Solovay・Kitaevの定理]
     instruction setに対し，
@@ -479,6 +501,7 @@
 
 \begin{frame}
   \frametitle{量子コンパイル}
+  以下，\(d=2\)とする．
   \begin{thm}[Solovay・Kitaevアルゴリズム]
     \label{SK algrithm}
     \(\mathcal{G}\subset SU(2)\)をinstruction setとする．
@@ -495,7 +518,6 @@
     \(\SK(U,n)\)が帰納的に定義できる．（続く）
   \end{thm}
 \end{frame}
-
 
 \begin{frame}{量子コンパイル}
   \begin{thm}[Solovay・Kitaevアルゴリズム]

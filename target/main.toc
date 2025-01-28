@@ -1,3 +1,3 @@
 \beamer@sectionintoc {1}{イントロダクション}{3}{0}{1}
 \beamer@sectionintoc {2}{量子コンパイル}{12}{0}{2}
-\beamer@sectionintoc {3}{まとめ}{22}{0}{3}
+\beamer@sectionintoc {3}{まとめ}{23}{0}{3}
