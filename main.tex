@@ -7,12 +7,12 @@
 % \AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
 
 \usepackage{luatexja} % Beamer単体では日本語を出力できないのでこれを使う
-%\renewcommand{\kanjifamilydefault}{\gtdefault} % 漢字をゴシック体に指定
+\renewcommand{\kanjifamilydefault}{\gtdefault} % 漢字をゴシック体に指定
 
 % \setbeamertemplate{navigation symbols}{} %% 右下のアイコンを消す
 
 % \usetheme[block=fill]{metropolis} % usepackageじゃなくてusethemeだから注意
-\usetheme{Madrid}             %% theme の選択
+% \usetheme{Madrid}             %% theme の選択
 % \usetheme{Boadilla}           %% Beamer のディレクトリの中の
 % \usetheme{CambridgeUS}        %% Madrid.sty を指定
 % \usetheme{Antibes}            %% 色々と試してみるといいだろう
@@ -21,23 +21,25 @@
 % \usetheme{Goettingen}
 % \usetheme{Singapore}
 % \usetheme{Szeged}
+\usetheme{Frankfurt}
 
+\usecolortheme{beaver}
 % \usecolortheme{rose}          %% colortheme を選ぶと色使いが変わる
 % \usecolortheme{albatross}
 
 % \useoutertheme{shadow}                 %% 箱に影をつける
-% \usefonttheme{professionalfonts}       %% 数式の文字を通常の LaTeX と同じにする
+\usefonttheme{professionalfonts}       %% 数式の文字を通常の LaTeX と同じにする
 
-% \setbeamercovered{transparent}         %% 消えている文字をうっすらと表示する
+\setbeamercovered{transparent}         %% 消えている文字をうっすらと表示する
 
-\setbeamertemplate{theorems}[numbered]  %% 定理に番号をつける
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{proposition}[thm]{Proposition}
-\theoremstyle{example}
-\newtheorem{exam}[thm]{Example}
-\newtheorem{remark}[thm]{Remark}
-\newtheorem{question}[thm]{Question}
-\newtheorem{prob}[thm]{Problem}
+% \setbeamertemplate{theorems}[numbered]  %% 定理に番号をつける
+% \newtheorem{thm}{Theorem}[section]
+% \newtheorem{proposition}[thm]{Proposition}
+% \theoremstyle{example}
+% \newtheorem{exam}[thm]{Example}
+% \newtheorem{remark}[thm]{Remark}
+% \newtheorem{question}[thm]{Question}
+% \newtheorem{prob}[thm]{Problem}
 
 % \definecolor{katsuobushi}{HTML}{cd853f} % HTMLカラーコードで指定
 % \setbeamercolor{frametitle}{bg=katsuobushi} % bgをfgにすると文字色が変わる
@@ -49,9 +51,148 @@
 % {block body example} % 同上本文
 % {normal text} % 本文．これのbgを指定するとスライドの背景色が変わる
 
-\title{線型ホモトピー型理論を動機付けする\\
-トポロジカル量子コンパイルの形式検証に向けて}
-\author{322301073 伊藤 賢世}
+%図
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary {shapes.misc}
+\usetikzlibrary{positioning}
+%数学マクロ  
+\newcommand{\N}{\mathbb{N}}%自然数全体
+\newcommand{\Z}{\mathbb{Z}}%有理整数環
+\newcommand{\Q}{\mathbb{Q}}%有理数体
+\newcommand{\R}{\mathbb{R}}%実数体
+\newcommand{\C}{\mathbb{C}}%複素数体
+\newcommand{\p}{\mathcal{P}}%冪
+\renewcommand{\o}{\mathcal{O}}%開集合族
+\newcommand{\U}{\mathcal{U}}%宇宙
+%自分用の書き換え
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\goldenmean}{\alpha}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\subset}{\subseteq}
+\renewcommand{\emptyset}{\varnothing}
+%数学マクロ
+\newcommand{\set}[1]{\{\,#1\,\}}%\midや;を用いる
+\newcommand{\map}[3]{#1\colon#2\longrightarrow#3}
+\newcommand{\Map}[2]{#1\stackrel{#2}{\longrightarrow}}%domainとarrowのみ
+\newcommand{\pair}[1]{\langle#1\rangle}%山括弧
+% \newcommand{\note}[1]{\quad(\,#1\,)}%補足
+%一般マクロ
+%%%%%%%%%%%特定の設定%%%%%%%%%%%%
+%定理環境
+% \usepackage{amsthm}
+% \theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{cf}[thm]{例}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{ex}[thm]{問題}
+\newtheorem{axiom}[thm]{公理}
+\newtheorem{ob}[thm]{観察}
+\newtheorem{tr}[thm]{事実}
+% \numberwithin{thm}{section}
+% \newenvironment{definition}{\begin{dfn}}{\end{dfn}}
+%数学マクロ
+%圏論
+\DeclareMathOperator{\Ob}{Ob}
+\DeclareMathOperator{\Mor}{Mor}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\cod}{cod}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Lim}{Lim}
+\DeclareMathOperator{\Colim}{Colim}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\In}{\text{ in }}
+\renewcommand{\c}{\mathcal{C}}%圏
+\renewcommand{\d}{\mathcal{D}}
+\newcommand{\e}{\mathcal{E}}
+\newcommand{\I}{\mathbf{I}}%添字圏
+\renewcommand{\j}{\mathscr{J}}
+\newcommand{\SetCat}{\mathbf{Set}}
+\newcommand{\Vect}{\mathbf{Vect}}
+\newcommand{\Mod}{\mathbf{Mod}}
+\newcommand{\Pos}{\mathbf{Pos}}
+\newcommand{\Grp}{\mathbf{Grp}}
+\newcommand{\Cat}{\mathbf{Cat}}
+\newcommand{\Id}{\mathrm{Id}}%関手
+\newcommand{\op}{\mathrm{op}}%双対
+\newcommand{\placeholder}{{-}}%扱いをマイナス記号と区別
+\newcommand{\yoneda}{\mbox{\textbf{よ}}}%米田埋込
+\newcommand{\yoyoneda}{\mbox{\textbf{ね}}}%余米田埋込
+\newcommand{\sSet}{\mathbf{sSet}}
+\newcommand{\Top}{\mathbf{Top}}
+\newcommand{\deltacat}{\mathbf{\Delta}}
+\newcommand{\DFib}{\mathbf{DFib}}
+\newcommand{\Spec}{\mathrm{Spec}}
+\newcommand{\dutp}{\mathfrak{p}}
+\newcommand{\dutq}{\mathfrak{q}}
+\newcommand{\QCoh}{\mathrm{QCoh}}
+%型理論
+%証明木環境
+\usepackage{bussproofs}
+\EnableBpAbbreviations
+\newcommand{\judge}[2]{#1\vdash#2}
+\newcommand{\typejudge}[2]{\judge{#1}{#2\textsf{ type}}}
+\newcommand{\contextjudge}[1]{#1\textsf{ cxt}}
+\newcommand{\with}{\mathrel{\&}}
+\newcommand{\parr}{\mathrel{\rotatebox[origin=c]{180}{\&}}}%乗法的選言
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\2}{\mathbf{2}}
+\newcommand{\miff}{
+  \,\rotatebox[origin=c]{180}{\multimap}\mspace{-20mu}\multimap
+}
+\newcommand{\SF}{\mathbf{S4}}
+\newcommand{\emptytype}{\mathbf{0}}
+\newcommand{\unittype}{\mathbf{1}}
+\newcommand{\refl}[1]{\mathsf{refl}_{#1}}
+\newcommand{\nat}{\mathsf{N}}
+\newcommand{\s}{\mathbb{S}}
+\newcommand{\pr}{\mathsf{pr}}
+\newcommand{\ap}[1]{\mathsf{ap}_{#1}}
+\newcommand{\transport}[1]{\mathsf{transport}^{#1}}
+\newcommand{\apd}[1]{\mathsf{apd}_{#1}}
+\newcommand{\qinv}[1]{\mathsf{qinv}(#1)}
+\newcommand{\isProp}[1]{\mathsf{isProp}(#1)}
+\newcommand{\isequiv}{\mathsf{isequiv}}
+\newcommand{\isContr}{\mathsf{isContr}}
+\newcommand{\fib}{\mathsf{fib}}
+\newcommand{\idtoeqv}{\mathsf{idtoeqv}}
+\newcommand{\base}{\mathsf{base}}
+\newcommand{\loopbase}{\mathsf{loop}}
+\newcommand{\ft}{\mathsf{ft}}
+\newcommand{\T}{\mathbf{T}}
+\newcommand{\classify}[1]{\ulcorner#1\urcorner}
+\newcommand{\HH}{\mathcal{H}}
+\DeclareMathOperator*{\Conf}{\mathsf{Conf}}
+\newcommand{\Conff}[1]{\Conf_{\set{1,\ldots,#1}}}
+\newcommand{\Confff}[2]{\Conf_{\set{#1,\ldots,#2}}}
+\newcommand{\Braid}{\mathrm{Br}}
+\newcommand{\Bit}{\mathrm{Bit}}
+\newcommand{\QBit}{\mathrm{QBit}}
+\newcommand{\NOT}{\mathrm{NOT}}
+\newcommand{\CNOT}{\mathrm{CNOT}}
+\newcommand{\trace}{\mathrm{tr}}
+\newcommand{\SK}{\mathsf{SK}}
+%%量子論
+%ブラ・ケット記法
+\usepackage{braket}%\Setと\setが競合するから注意
+%量子回路
+\usepackage{quantikz}
+%一般マクロ
+\newcommand{\head}[1]{\overset{\downarrow}{#1}}
+
+\title[トポロジカル量子コンパイル]{線型ホモトピー型理論を動機付けする\\
+トポロジカル量子コンパイルの\\
+形式検証に向けて}
+\author[322301073 伊藤 賢世]{322301073 伊藤 賢世\\
+アドバイザー：Jacques Garrigue}
 \date{2025年1月30日}
 
 \begin{document}
@@ -59,16 +200,14 @@
   \maketitle
 \end{frame}
 
-\section{イントロダクション}
 \begin{frame}
-  \frametitle{イントロダクション}
   \begin{block}{修論内容：サーベイ}
     Hisham Satiらの研究プロジェクト
     \begin{center}
       Quantum Certification
       via Linear Homotopy Types
     \end{center}
-    を理解するための\alert{トポロジカル量子コンパイル}について
+    を理解するための\structure{トポロジカル量子コンパイル}について
   \end{block}
   \begin{block}{研究概要}
     \begin{description}
@@ -76,11 +215,16 @@
         検証言語「QS」 と
         その基礎理論「線型ホモトピー型理論（LHoTT）」の提唱.
       \item[研究者] Hisham Sati，Urs Schreiber，David J. Meyer，\(\ldots\)
-      \item[拠点] ニューヨーク大学アブダビ校
+      \item[拠点] ニューヨーク大学アブダビ校\\
         Center for Quantum and
         Topological Systems (CQTS)
     \end{description}
   \end{block}
+\end{frame}
+
+\section{イントロダクション}
+\begin{frame}[noframenumbering]{目次}
+  \tableofcontents[currentsection]
 \end{frame}
 
 \begin{frame}
@@ -88,33 +232,32 @@
   \begin{block}{重要課題：量子コンピュータの実現}
     \begin{itemize}
       \item 量子コンピュータ\(=\)量子力学の原理を活用した計算機．
-      \item いくつかの計算について，
-            普及している（古典）コンピュータの性能を
-            凌駕する量子コンピュータ上のアルゴリズムが見つかっている．
-      \item MicrosoftやGoogleなども巨額の投資．
+      \item 普及している（古典）コンピュータの性能を
+            凌駕する量子コンピュータ上のアルゴリズムがいくつか見つかっている．
+      \item IBMやGoogleなども巨額の投資．
     \end{itemize}
     \begin{center}
       \(\longrightarrow\)
       量子コンピュータの実現に対する期待は計り知れない．
     \end{center}
   \end{block}
-
-  \begin{block}{計算の信頼性における課題①：Decoherence}
-    \begin{itemize}
-      \item 量子コンピュータのデータ\(=\)量子系の状態
-            （\alert{量子ビット}）．
-      \item 量子状態は外部環境の影響で壊れやすい
-            （\alert{Decoherence問題}）．
-    \end{itemize}
-    \begin{center}
-      \(\longrightarrow\)
-      エラーが多く，アルゴリズム通りに計算を実行させることは難しい．
-    \end{center}
-  \end{block}
 \end{frame}
 
 \begin{frame}
   \frametitle{イントロダクション}
+  \begin{block}{計算の信頼性における課題①：Decoherence}
+    \begin{itemize}
+      \item 量子コンピュータのデータ\(=\)量子系の状態
+            （\structure{量子ビット}）．
+      \item 量子状態は環境の影響で壊れやすい
+            （\structure{Decoherence問題}）．
+    \end{itemize}
+    \begin{center}
+      \(\longrightarrow\)
+      エラーが多く，アルゴリズム通りに計算することは難しい．
+    \end{center}
+  \end{block}
+
   \begin{block}{アプローチ①：エラーの訂正}
     \begin{itemize}
       \item 古典コンピュータでも物理レベルではエラーが起きている．
@@ -122,19 +265,23 @@
               \item データに冗長性をもたせて，データを復元
                     （誤り訂正理論）．
             \end{itemize}
-      \item 量子ビットを増やして，
-            量子コンピュータにも応用（量子誤り訂正）．
+      \item 量子コンピュータにも応用（量子誤り訂正）．
     \end{itemize}
     \begin{center}
       \(\longrightarrow\)
       量子ビットを大規模に用意する問題に至る．
     \end{center}
   \end{block}
+\end{frame}
 
+\begin{frame}
   \begin{block}{アプローチ②：エラーの低減}
     \begin{itemize}
-      \item \alert{トポロジカル量子計算}\(=\)
-            トポロジカルな情報で量子状態を構成．
+      \item \structure{トポロジカル量子計算}
+            \begin{itemize}
+              \item トポロジーで量子状態を構成．
+              \item \structure{組み紐}で計算を実行．
+            \end{itemize}
       \item Decoherenceに影響されにくく，エラーが減る．
     \end{itemize}
     \begin{center}
@@ -143,153 +290,398 @@
     \end{center}
   \end{block}
 
-  \begin{block}{}
-    ①と②を組み合わせて，decoherenceに対処．
-  \end{block}
+  \begin{center}
+    \tikzset{cross/.style={preaction={-,draw=white,line width=6pt}}}
+    \begin{tikzpicture}[auto, ->]
+      \node (a) at (0,4) {\(1\)}; \node (a') at (6,4) {\(1\)};
+
+      \node (b) at (0,2.5) {\(i\)}; \node (b') at (6,2.5) {\(i\)};
+      \node (c) at (0,1.5) {\(i+1\)}; \node (c') at (6,1.5) {\(i+1\)};
+
+      \node (d) at (0,0) {\(n\)}; \node (d') at (6,0) {\(n\)};
+
+      \draw (a) to (a');
+
+      \draw (c) to[out=-1,in=179] (b');
+      \draw (b)[cross] to[out=1,in=181] (c');
+
+      \draw (d) to node[swap] {worldline} (d');
+
+      \node (e) at (3,3) {\rotatebox{90}{\(\cdots\)}};
+      \node (e) at (3,1) {\rotatebox{90}{\(\cdots\)}};
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}
   \frametitle{イントロダクション}
-  \begin{exampleblock}{コンパイル}
-    あるプログラミング言語で書かれたコードを
-    別の言語のコードに変換すること．
-    特に，実行可能なコードに変換すること．
-    実行前に最適化が施されている．
+  \begin{block}{コンパイル}
+    \begin{itemize}
+      \item あるプログラミング言語で書かれたコードを，
+            数学的な意味を保ちつつ，
+            別のコードに変換することを\structure{コンパイル}という．
+      \item そのプログラムを\structure{コンパイラ}という．
+      \item 特に，コンピュータが実行可能なコードに変換したりする．
+      \item また，コードの実行に関する最適化が施される．
+    \end{itemize}
+  \end{block}
+
+  \begin{exampleblock}{例}
     \begin{description}
-      \item[Cコンパイラ] C言語→アセンブリ言語
-      \item[アセンブラ] アセンブリ言語→機械語
+      \item[Cコンパイラ] C言語\(\to\)アセンブリ言語
+      \item[アセンブラ] アセンブリ言語\(\to\)機械語
     \end{description}
     古典コンピュータは最終的に機械語を実行している．
   \end{exampleblock}
+\end{frame}
 
-  \begin{block}{量子コンパイル}
-    \begin{description}
-      \item[ソフトウェア側] 量子アルゴリズムを量子回路で記述する．
-      \item[ハードウェア側] 実行可能な量子回路．
-    \end{description}
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{block}{量子回路}
+    \begin{itemize}
+      \item 計算は\structure{量子ゲート}によって実行される．
+      \item その数学的な意味は\structure{ユニタリ変換}．
+      \item \structure{量子回路}は量子ゲートで構成され，
+            アルゴリズムを記述．
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{量子コンパイル：
+      計算したい量子回路\(\to\)実行可能な量子回路}
+    \begin{itemize}
+      \item 任意の量子ゲートを準備し実行可能にするのは現実的でない．
+      \item 有限個のみ準備（\structure{基本ゲート}）し，
+            その量子回路で実行する．
+    \end{itemize}
   \end{block}
 \end{frame}
 
 \begin{frame}
   \frametitle{イントロダクション}
-  \begin{block}{量子コンパイルのアルゴリズム}
-    \begin{itemize}
-      \item 任意の実行可能な量子回路を用意するのは現実的でない．
-      \item 量子回路を構成する基本要素を準備して，固定する\\
-            （有限個の\alert{基本ゲート}）．
-      \item 基本ゲートの組み合わせで，
-            任意の量子アルゴリズムを正確に\\
-            シミュレートすることはできない．
-    \end{itemize}
+  \begin{block}{量子コンパイルの特徴}
+    基本ゲートの組み合わせで，
+    任意の量子アルゴリズムを
+    \alert{正確に}シミュレートすることはできない．
     \begin{center}
       \(\longrightarrow\)
       任意の精度で\alert{近似的に}シュミレートする．\\
-      （cf. Solovey・Kitaevアルゴリズム）
+      （cf. \structure{Solovey・Kitaevアルゴリズム}）
     \end{center}
   \end{block}
+
+  \begin{alertblock}{注意}
+    後半では，Solovey・Kitaevアルゴリズムを説明する．
+  \end{alertblock}
 
   \begin{block}{課題①の先：トポロジカル量子コンパイル}
     トポロジカル量子コンピュータの量子コンパイル．
+    \begin{itemize}
+      \item 量子ゲート\(=\)\structure{組み紐ゲート}
+    \end{itemize}
   \end{block}
 \end{frame}
 
 \begin{frame}
   \frametitle{イントロダクション}
-  \begin{alertblock}{計算の信頼性における課題②：コンパイルの正しさ}
-    古典計算では，コンパイルの正しさが検証されている．
+  \begin{block}{コンパイルの形式検証}
+    古典コンピュータでは，コンパイルが正しいことの検証が研究されている．
     \begin{itemize}
-      \item コンパイルの仕様を検証言語で記述
-      \item cf. Cコンパイラは検証言語「Coq」で検証されている．
+      \item コンパイラの仕様を検証言語で記述し，
+            コードの数学的な意味が保たれることを証明する．
+      \item cf. Cコンパイラの1つCompCertの正しさは，
+            Coqで検証．
+    \end{itemize}
+  \end{block}
+  \begin{alertblock}{計算の信頼性における課題②：コンパイルの正しさ}
+    トポロジカル量子コンパイルの形式検証
+    \begin{itemize}
+      \item 量子回路の記述
+      \item トポロジカル量子ゲートの記述
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}
+  \frametitle{イントロダクション}
+  \begin{block}{Satiらの提案：線型ホモトピー型理論（LHoTT）}
+    \begin{itemize}
+      \item LHoTT = Linear + HoTT.
+      \item 量子回路の記述\(\to\)\structure{QS} \(\subset\) LHoTT
+      \item トポロジカル量子ゲートの記述\(\to\)
+            \structure{HoTT} \(\subset\) LHoTT
     \end{itemize}
     \begin{center}
       \(\longrightarrow\)
-      トポロジカル量子コンパイルの近似精度も検証したい．
-    \end{center}
-  \end{alertblock}
-
-  \begin{block}{Satiらの提案：線型ホモトピー型理論（LHoTT）}
-    \begin{itemize}
-      \item 前提
-    \end{itemize}
-    \begin{center}
-      \(\longrightarrow\)結論
+      LHoTTは信頼性のある量子プログラミングに対する\\
+      最初の包括的なパラダイムになる．
     \end{center}
   \end{block}
 \end{frame}
 
-\begin{frame}
-  \frametitle{イントロダクション}
-  \begin{block}{タイトル}
-    \begin{itemize}
-      \item 前提
-    \end{itemize}
-    \begin{center}
-      \(\longrightarrow\)結論
-    \end{center}
-  \end{block}
+\section{量子コンパイル}
+\begin{frame}[noframenumbering]{目次}
+  \tableofcontents[currentsection]
 \end{frame}
 
 \begin{frame}
-  \frametitle{一枚目のスライド}
-  普通に文中で\LaTeX コマンドが使用できます．（そらそう）
-  \begin{block}{ブロックのタイトル}
-    block環境を作成しbeginの第二引数にタイトルを渡すとこうなります．
-  \end{block}
-  \begin{alertblock}{アラート}
-    alertblockを指定するとこんな風になります．
-  \end{alertblock}
-  \begin{exampleblock}{例}
-    exampleblockを指定するとこうなります．
+  \frametitle{量子コンパイル}
+  近似するには，距離の概念を要する．以下，\(d=2^n\)とする．
+  \begin{dfn}[ユニタリ変換の間の距離]
+    任意の\(U,V\in U(d)\)に対し，その距離を次で定義する．
+    \[
+      d(U,V):=||U-V||=\sup_{||\psi||=1}||(U-V)\ket{\psi}||
+    \]
+  \end{dfn}
+
+  \begin{dfn}[Universal set]
+    ゲートの集合\(\mathcal{G}\)が\(U(d)\)に対して
+    \structure{万能(universal)}であるとは，
+    任意の\(U\in U(d)\)と\(\epsilon >0\)に対し，
+    ある\(l\in\N\)と\(G_1,\ldots,G_l\in\mathcal{G}\)
+    が存在して，\(d(U,G_l\cdots G_1)<\epsilon\)となることである．
+    有限列\(G_1,\ldots,G_l\)を\(U\)の
+    \structure{\(\epsilon\)近似列}といい，
+    \(l\)を長さという．
+  \end{dfn}
+\end{frame}
+
+\begin{frame}{量子コンパイル}
+  ユニタリ変換\(U\)は，
+  物理的な意味を持たない大域的な相を無視して，
+  特殊ユニタリ行列の積に分解できる．
+  よって，特殊ユニタリ行列が近似できればよい．
+  \begin{dfn}[Instruction set]
+    ゲートの有限集合\(\mathcal{G}\)が\structure{instruction set}であるとは，次の3つの条件を満たすことである．
+    \begin{enumerate}
+      \item \(\mathcal{G} \subset SU(d)\)．
+      \item \(\mathcal{G}\)は逆行列で閉じている．
+      \item \(\mathcal{G}\)は\(SU(d)\)に対してuniversalである．
+    \end{enumerate}
+  \end{dfn}
+\end{frame}
+
+\begin{frame}{量子コンパイル}
+  ゲート集合のuniversalityは任意の\(U\in SU(d)\)に対して，
+  ある長さ\(l\)が存在したが，
+  instruction setであることを仮定すると，
+  その長さの上限が\(\epsilon\)を用いて与えられる．
+  \begin{thm}[Solovay・Kitaevの定理]
+    instruction setに対し，
+    ある定数\(c\)があって，任意の\(U\in SU(d)\)を
+    \(\epsilon\)の精度で近似するとき，
+    近似列の長さは\(O(\log^c(1/\epsilon))\)
+    に抑えられる．
+  \end{thm}
+  このままだと近似列の存在はわかっても，その見つけ方がわからない．
+  Solovay・Kitaevの定理を用いて，
+  近似列を見つけるアルゴリズムを与える．
+\end{frame}
+
+\begin{frame}
+  \frametitle{量子コンパイル}
+  \begin{thm}[Solovay・Kitaevアルゴリズム]
+    \label{SK algrithm}
+    \(\mathcal{G}\subset SU(2)\)をinstruction setとする．
+    ある正数列\((\epsilon_n)\)であって，
+    \[
+      \epsilon_n < \epsilon_{n-1},\quad \epsilon_n\to 0
+    \]
+    となるものが存在し，次を満たす．
+    任意のゲート\(U\in SU(2)\)と深さ\(n\)を入力して，
+    \(\epsilon_n\)近似列
+    \(G_1,\ldots,G_{l_n}\in \mathcal{G}\)並びに
+    量子回路\(G_{l_n}\cdots G_1\)
+    を出力するSKアルゴリズム
+    \(\SK(U,n)\)が帰納的に定義できる．（続く）
+  \end{thm}
+\end{frame}
+
+
+\begin{frame}{量子コンパイル}
+  \begin{thm}[Solovay・Kitaevアルゴリズム]
+    \(\cdots\)このとき，任意の\(\epsilon\)に対し\(n\)を適当に選ぶことで
+    近似列が得られ，
+    近似列の長さ\(l_n\)とSKアルゴリズムの実行時間\(t_n\)が
+    次のように評価できる．
+    \begin{align*}
+      n   & = \left\lceil\frac{\ln[\frac{\ln(1/\epsilon c^2)}{\ln(1/\epsilon_0 c^2)}]}{\ln(3/2)}\right\rceil, \\
+      l_n & = O(\ln^{\ln 5/ln(3/2)}(1/\epsilon)),                                                             \\
+      t_n & = O(\ln^{\ln 3/ln(3/2)}(1/\epsilon)).
+    \end{align*}
+  \end{thm}
+\end{frame}
+
+\begin{frame}{量子コンパイル：SKアルゴリズムの証明}
+  % c_0 -> c -> \epsilon_0 -> l_0 -> U -> U_0
+  （証明）次のStep0〜Step2でSKアルゴリズムを帰納的に定義する．
+  その前にStep2で登場する定数\(c\)に対し，
+  \(\epsilon_0 < 1/c^2\)なる定数をとる．
+  \begin{exampleblock}
+    {Step0: 初期近似列のbrute-force search}
+    \(\epsilon_0\)に対してSolovay・Kitaevの定理を適用し，
+    近似列を長さ\(l_0\)で抑える．
+    \(U\in SU(2)\)に対し，
+    \(\epsilon_0\)近似列
+    \(L_0 \in \coprod_{0 < l \leq l_0}\mathcal{G}^l\)
+    がとれる．
+    その量子回路を\(U_0\)とおく．
+    \(\SK(U,0) := (L_0;U_0)\)と定義する．
   \end{exampleblock}
 \end{frame}
 
-\begin{frame}
-  \frametitle{横並べ}
-  スライドで左右比較するときなどにこのようにします
-  \begin{columns}
-    \begin{column}{.4\linewidth} % 現在の環境の幅の0.4(=40%)の意
-      \begin{block}{内容1}
-        内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1
-      \end{block}
-    \end{column}
-    \begin{column}{.4\linewidth}
-      \begin{block}{内容2}
-        内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2
-      \end{block}
-    \end{column}
-  \end{columns}
-  このとき各columnの幅は合計100\%にしてしまうとデザイン的にあんまよくないです
+\begin{frame}{量子コンパイル：SKアルゴリズムの証明}
+  \begin{exampleblock}{Step1: 群交換子による分割}
+    \(n\geq 1\)に対し，
+    \((L_{n-1};U_{n-1}) := \SK(U,n-1)\)とおく．
+    ある分割
+    \begin{equation*}\label{gc decomp}
+      UU_{n-1}^\dagger = \Delta = VWV^\dagger W^\dagger,\quad
+      d(I,V),d(I,W) < c_0\sqrt{\epsilon_{n-1}}
+    \end{equation*}
+    によって，\(V,W\in\mathcal{G}\)を得る．
+    ただし，\(c_0\approx\frac{1}{\sqrt{2}}\)で定数．
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{量子コンパイル：SKアルゴリズムの証明}
+  \begin{exampleblock}
+    {Step2: 交換因子にSKアルゴリズム}
+    \(V,W\)に対してSKアルゴリズムを適用する．
+    \[
+      (L_V;V_{n-1}):=\SK(V,n-1),\quad
+      (L_W;W_{n-1}):=\SK(W,n-1).
+    \]
+    このとき，
+    \(\Delta_{n-1}:= V_{n-1}W_{n-1}
+    V_{n-1}^\dagger W_{n-1}^\dagger\)
+    とおくと，
+    \begin{align}
+      d(\Delta,\Delta_{n-1})
+       & < \epsilon_n
+      :=c\epsilon_{n-1}^\frac{3}{2},\quad \\
+      \epsilon_{n-1}
+       & <\frac{1}{c^{2}} \label{sk leq}
+    \end{align}
+    を満たす．
+    ただし，\(c\approx 8c_0\approx 4\sqrt{2}\)で定数．
+    \[
+      U_{n}     := \Delta_{n-1} U_{n-1},\quad
+      \SK(U,n)  :=(L_{n-1}L_W^\dagger L_V^\dagger L_W L_V;
+      U_{n})
+    \]
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{量子コンパイル：SKアルゴリズムの証明}
+  この手続きにより，
+  \(U_{n-1}U^\dagger = \Delta_{n-1}
+  U_{n-1}U^\dagger = \Delta_{n-1} \Delta^\dagger\)
+  となるから，
+  \[
+    d(U,U_{n-1})=d(I,U_{n-1}U^\dagger)
+    =d(I,\Delta_{n-1}\Delta^\dagger)=d(\Delta,\Delta_{n-1})
+    < \epsilon_n
+  \]
+  と評価できる．
+  また，不等式\ref{sk leq}により
+  \(\epsilon_n < \epsilon_{n-1}\)を満たす．
+
+  また，定め方から
+  \begin{align*}
+    l_n & = 5l_{n-1},                  \\
+    t_n & \leq 3t_{n-1} + \text{const}
+  \end{align*}
+  であり，後半が成り立つ．（証明終わり）
+\end{frame}
+
+\section{まとめ}
+\begin{frame}[noframenumbering]{目次}
+  \tableofcontents[currentsection]
 \end{frame}
 
 \begin{frame}
-  \frametitle{Overlay}
-  \begin{itemize}
-    \item 一個目
-          \pause % このコマンドを打つごとに一時停止する
-    \item 二個目
-          \pause
-    \item 三個目
-          \pause
-    \item 四個目
-  \end{itemize}
-\end{frame}
-
-\begin{itemize}
-  \item<1-> 一個目（一画面目以降表示）
-  \item<2-> 二個目（二画面目以降表示）
-  \item<3-> 三個目（三画面目以降表示）
-  \item<1-2> 四個目（二画面目まで表示）
-\end{itemize}
-
-\begin{frame}
-  \frametitle{Item以外のOverlay}
-  \begin{block}{常に表示1}
+  \frametitle{まとめ}
+  \begin{block}{振り返り}
+    トポロジカル量子コンパイルを主題として捉え，
+    一連の流れの中でLHoTT（あるいはQS）を
+    動機付けることがねらいであった．
   \end{block}
-  \uncover<2->{二画面目以降のみ表示(uncover)}
-  \begin{block}{常に表示2}
-  \end{block}
-  \only<2->{二画面目以降のみ表示(only)}
-  \begin{block}{常に表示3}
+  \begin{block}{展望}
+    \begin{itemize}
+      \item LHoTTの詳細な構文論と意味論
+      \item 安定ホモトピー論
+      \item 状態空間の具体的な構成
+      \item トポロジカル量子計算によるdecoherence耐性の記述
+      \item 共形場理論やChern・Simons理論を含む場の量子論
+      \item 物質のトポロジカル秩序相
+      \item トポロジカル量子計算の形式検証
+            のためのTED-\(K\)理論
+      \item LHoTTのcompanion articles
+    \end{itemize}
   \end{block}
 \end{frame}
+
+% \begin{frame}
+%   \frametitle{一枚目のスライド}
+%   普通に文中で\LaTeX コマンドが使用できます．（そらそう）
+%   \begin{block}{ブロックのタイトル}
+%     block環境を作成しbeginの第二引数にタイトルを渡すとこうなります．
+%   \end{block}
+%   \begin{alertblock}{アラート}
+%     alertblockを指定するとこんな風になります．
+%   \end{alertblock}
+%   \begin{exampleblock}{例}
+%     exampleblockを指定するとこうなります．
+%   \end{exampleblock}
+% \end{frame}
+
+% \begin{frame}
+%   \frametitle{横並べ}
+%   スライドで左右比較するときなどにこのようにします
+%   \begin{columns}
+%     \begin{column}{.4\linewidth} % 現在の環境の幅の0.4(=40%)の意
+%       \begin{block}{内容1}
+%         内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1
+%       \end{block}
+%     \end{column}
+%     \begin{column}{.4\linewidth}
+%       \begin{block}{内容2}
+%         内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2
+%       \end{block}
+%     \end{column}
+%   \end{columns}
+%   このとき各columnの幅は合計100\%にしてしまうとデザイン的にあんまよくないです
+% \end{frame}
+
+% \begin{frame}
+%   \frametitle{Overlay}
+%   \begin{itemize}
+%     \item 一個目
+%           \pause % このコマンドを打つごとに一時停止する
+%     \item 二個目
+%           \pause
+%     \item 三個目
+%           \pause
+%     \item 四個目
+%   \end{itemize}
+% \end{frame}
+
+% \begin{itemize}
+%   \item<1-> 一個目（一画面目以降表示）
+%   \item<2-> 二個目（二画面目以降表示）
+%   \item<3-> 三個目（三画面目以降表示）
+%   \item<1-2> 四個目（二画面目まで表示）
+% \end{itemize}
+
+% \begin{frame}
+%   \frametitle{Item以外のOverlay}
+%   \begin{block}{常に表示1}
+%   \end{block}
+%   \uncover<2->{二画面目以降のみ表示(uncover)}
+%   \begin{block}{常に表示2}
+%   \end{block}
+%   \only<2->{二画面目以降のみ表示(only)}
+%   \begin{block}{常に表示3}
+%   \end{block}
+% \end{frame}
 \end{document}
