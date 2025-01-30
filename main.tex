@@ -211,7 +211,7 @@
   \end{block}
   \begin{block}{研究概要}
     \begin{description}
-      \item[主張] 信頼性のある量子計算を実現するための
+      \item[主張] 信頼性のある量子コンピュータを実現するための
         検証言語「QS」 と
         その基礎理論「線型ホモトピー型理論（LHoTT）」の提唱.
       \item[研究者] Hisham Sati，Urs Schreiber，David J. Meyer，\(\ldots\)
@@ -226,6 +226,19 @@
 % コンパイルの全体図とSKアルゴリズムの部分
 % トポロジカル量子コンパイル
 
+\begin{frame}
+  \begin{block}{概要}
+    \begin{description}
+      \item[前半] 修士論文では，量子コンピュータの誤りを排除する
+        \structure{トポロジカル量子コンパイル}を主題として捉え，
+        （古典）コンピュータ上で検証するための言語としてLHoTT（あるいはQS）を
+        動機付ける．
+      \item[後半] 本発表では，特にトポロジカル量子コンパイルの一般論である
+        \structure{量子コンパイル}について説明する．
+    \end{description}
+  \end{block}
+\end{frame}
+
 \section{イントロダクション}
 \begin{frame}[noframenumbering]{目次}
   \tableofcontents[currentsection]
@@ -238,7 +251,7 @@
       \item 量子コンピュータ\(=\)量子力学の原理を活用した計算機．
       \item 普及している（古典）コンピュータの性能を
             凌駕する量子コンピュータ上のアルゴリズムがいくつか見つかっている．
-      \item IBMやGoogleなども巨額の投資．
+            %\item IBMやGoogleなども巨額の投資．
     \end{itemize}
     \begin{center}
       \(\longrightarrow\)
@@ -247,12 +260,33 @@
   \end{block}
 \end{frame}
 
+% \begin{frame}
+%   \frametitle{イントロダクション}
+%   \begin{block}{修論概要}
+%     \[
+%       \underbrace{
+%         \begin{array}{rccc}
+%           \text{ソフトウェア側} & \stackrel{\text{コンパイル}}{\longrightarrow} & \text{ハードウェア側}   \\
+%           \text{量子回路}    & \longmapsto                              & \text{実行可能な量子回路}
+%         \end{array}
+%       }_{\text{形式検証}}
+%     \]
+%   \end{block}
+% \end{frame}
+
 \begin{frame}
   \frametitle{イントロダクション}
   \begin{block}{計算の信頼性における課題①：Decoherence}
     \begin{itemize}
       \item 量子コンピュータのデータ\(=\)量子系の状態
             （\structure{量子ビット}）．
+            \begin{itemize}
+              \item \(n\)量子ビット\((\C^2)^{\otimes n}:=\underbrace{
+                      \C^2\otimes\cdots\otimes\C^2}_{n\text{個}}\)
+                    % \item \(\ket{\phi}=c_0\ket{0} + c_1\ket{1}\in\QBit:=\C^2\)
+                    % \item \(\QBit^{\otimes n}:=\underbrace{
+                    %         \QBit\otimes\cdots\otimes\QBit}_{n\text{個}}\)
+            \end{itemize}
       \item 量子状態は環境の影響で壊れやすい
             （\structure{Decoherence問題}）．
     \end{itemize}
@@ -262,59 +296,58 @@
     \end{center}
   \end{block}
 
-  \begin{block}{アプローチ①：エラーの訂正}
-    \begin{itemize}
-      \item 古典コンピュータでも物理レベルではエラーが起きている．
-            \begin{itemize}
-              \item データに冗長性をもたせて，データを復元
-                    （誤り訂正理論）．
-            \end{itemize}
-      \item 量子コンピュータにも応用（量子誤り訂正）．
-    \end{itemize}
-    \begin{center}
-      \(\longrightarrow\)
-      量子ビットを大規模に用意する問題に至る．
-    \end{center}
-  \end{block}
+  % \begin{block}{アプローチ①：エラーの訂正}
+  %   \begin{itemize}
+  %     \item 古典コンピュータでも物理レベルではエラーが起きている．
+  %           \begin{itemize}
+  %             \item データに冗長性をもたせて，データを復元
+  %                   （誤り訂正理論）．
+  %           \end{itemize}
+  %     \item 量子コンピュータにも応用（量子誤り訂正）．
+  %   \end{itemize}
+  %   \begin{center}
+  %     \(\longrightarrow\)
+  %     量子ビットを大規模に用意する問題に至る．
+  %   \end{center}
+  % \end{block}
 \end{frame}
 
 \begin{frame}
-  \begin{block}{アプローチ②：エラーの低減}
+  \begin{block}{アプローチ：エラーの低減}
     \begin{itemize}
       \item \structure{トポロジカル量子計算}
             \begin{itemize}
               \item トポロジーで量子状態を構成．
               \item \structure{組み紐}で計算を実行．
+                    \begin{center}
+                      \tikzset{cross/.style={preaction={-,draw=white,line width=6pt}}}
+                      \begin{tikzpicture}[auto, ->]
+                        \node (a) at (0,4) {\(1\)}; \node (a') at (6,4) {\(1\)};
+
+                        \node (b) at (0,2.5) {\(i\)}; \node (b') at (6,2.5) {\(i\)};
+                        \node (c) at (0,1.5) {\(i+1\)}; \node (c') at (6,1.5) {\(i+1\)};
+
+                        \node (d) at (0,0) {\(n\)}; \node (d') at (6,0) {\(n\)};
+
+                        \draw (a) to (a');
+
+                        \draw (c) to[out=-1,in=179] (b');
+                        \draw (b)[cross] to[out=1,in=181] (c');
+
+                        \draw (d) to node[swap] {worldline} (d');
+
+                        \node (e) at (3,3) {\rotatebox{90}{\(\cdots\)}};
+                        \node (e) at (3,1) {\rotatebox{90}{\(\cdots\)}};
+                      \end{tikzpicture}
+                    \end{center}
             \end{itemize}
       \item Decoherenceに影響されにくく，エラーが減る．
     \end{itemize}
-    \begin{center}
-      \(\longrightarrow\)
-      訂正のための冗長な量子ビットは少なくて済む．
-    \end{center}
+    % \begin{center}
+    %   \(\longrightarrow\)
+    %   訂正のための冗長な量子ビットは少なくて済む．
+    % \end{center}
   \end{block}
-
-  \begin{center}
-    \tikzset{cross/.style={preaction={-,draw=white,line width=6pt}}}
-    \begin{tikzpicture}[auto, ->]
-      \node (a) at (0,4) {\(1\)}; \node (a') at (6,4) {\(1\)};
-
-      \node (b) at (0,2.5) {\(i\)}; \node (b') at (6,2.5) {\(i\)};
-      \node (c) at (0,1.5) {\(i+1\)}; \node (c') at (6,1.5) {\(i+1\)};
-
-      \node (d) at (0,0) {\(n\)}; \node (d') at (6,0) {\(n\)};
-
-      \draw (a) to (a');
-
-      \draw (c) to[out=-1,in=179] (b');
-      \draw (b)[cross] to[out=1,in=181] (c');
-
-      \draw (d) to node[swap] {worldline} (d');
-
-      \node (e) at (3,3) {\rotatebox{90}{\(\cdots\)}};
-      \node (e) at (3,1) {\rotatebox{90}{\(\cdots\)}};
-    \end{tikzpicture}
-  \end{center}
 \end{frame}
 
 \begin{frame}
@@ -344,9 +377,19 @@
   \begin{block}{量子回路}
     \begin{itemize}
       \item 計算は\structure{量子ゲート}によって実行される．
-      \item その数学的な意味は\structure{ユニタリ変換}．
+            \begin{itemize}
+              \item 量子系の\structure{ユニタリ変換}
+                    \(\map{U}{(\C^2)^{\otimes n}}{(\C^2)^{\otimes n}}\)．
+            \end{itemize}
       \item \structure{量子回路}は量子ゲートで構成され，
             アルゴリズムを記述．
+            \[
+              \CNOT(H\otimes I)\ket{00},\quad
+              \begin{quantikz}[thin lines]
+                \lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \qw \\
+                \lstick{$\ket{0}$} & \qw      & \targ{} & \qw
+              \end{quantikz}
+            \]
     \end{itemize}
   \end{block}
 
@@ -422,6 +465,26 @@
   \end{block}
 \end{frame}
 
+% \begin{frame}
+%   \frametitle{イントロダクション}
+%   \begin{block}{修論概要}
+%     \[
+%       \begin{array}{rccc}
+%         \text{ソフトウェア側} & \stackrel{\text{量子コンパイル}}{\longrightarrow} & \text{ハードウェア側}   \\
+%         \text{量子回路}    & \longmapsto                                & \text{実行可能な量子回路}
+%       \end{array}
+%     \]
+%     \[
+%       \underbrace{
+%         \begin{array}{rccc}
+%           \text{ソフトウェア側} & \stackrel{\text{トポロジカル量子コンパイル}}{\longrightarrow} & \text{(トポロジカル)ハードウェア側} \\
+%           \text{量子回路}    & \longmapsto                                      & \text{(組み紐に対応する) 量子回路}
+%         \end{array}
+%       }_{\text{形式検証}}
+%     \]
+%   \end{block}
+% \end{frame}
+
 \section{量子コンパイル}
 \begin{frame}[noframenumbering]{目次}
   \tableofcontents[currentsection]
@@ -451,13 +514,14 @@
     \(l\)を長さという．
   \end{dfn}
 
-  \begin{alertblock}{注意}
-    ゲート集合のuniversalityは
-    \[
-      \forall U\in U(d),\exists l\in\N,\ldots
-    \]
-    という形の主張である．
-  \end{alertblock}
+  % \begin{exampleblock}{例}
+  %   \begin{itemize}
+  %     \item
+  %     \item
+  %           \(\set{H,\CNOT,T}\)は\(U(d)\)
+  %           に対して万能ゲート集合である．
+  %   \end{itemize}
+  % \end{exampleblock}
 \end{frame}
 
 % \begin{frame}{量子コンパイル}
@@ -467,41 +531,42 @@
 % \end{frame}
 
 \begin{frame}{量子コンパイル}
-  ユニタリ変換は，
-  物理的な意味を持たない大域的な相を無視して，
-  特殊ユニタリ行列の積に分解できる．
-  % \begin{prop}
-  %   任意の\(U\in U(2)\)に対してある
-  % \end{prop}
-  よって，特殊ユニタリ行列が近似できればよい．
+  \begin{itemize}
+    \item \(U(d)\)の元は\(U(2)\cup\set{\CNOT}\)の元の合成で表せる．
+    \item \(U(2)\)の元は\(SU(2)\)の元の合成で表せる．
+          ただし，物理的な意味を持たない大域的な相を無視する．
+          \begin{center}
+            \(\longrightarrow\)
+            よって，\(SU(2)\)の元が近似できればよい．
+          \end{center}
+  \end{itemize}
   \begin{dfn}[Instruction set]
     ゲートの有限集合\(\mathcal{G}\)が\structure{instruction set}であるとは，次の3つの条件を満たすことである．
     \begin{enumerate}
-      \item \(\mathcal{G} \subset SU(d)\)．
+      \item \(\mathcal{G} \subset SU(2)\)．
       \item \(\mathcal{G}\)は逆行列で閉じている．
-      \item \(\mathcal{G}\)は\(SU(d)\)に対してuniversalである．
+      \item \(\mathcal{G}\)は\(SU(2)\)に対してuniversalである．
     \end{enumerate}
   \end{dfn}
 \end{frame}
 
-\begin{frame}{量子コンパイル}
-  このinstruction setを仮定すると，
-  その長さの上限が\(\epsilon\)を用いて与えられる．
-  \begin{thm}[Solovay・Kitaevの定理]
-    instruction setに対し，
-    ある定数\(c\)があって，任意の\(U\in SU(d)\)を
-    \(\epsilon\)の精度で近似するとき，
-    近似列の長さは\(O(\log^c(1/\epsilon))\)
-    に抑えられる．
-  \end{thm}
-  このままだと近似列の存在はわかっても，その見つけ方がわからない．
-  Solovay・Kitaevの定理を用いて，
-  近似列を見つけるアルゴリズムを与える．
-\end{frame}
+% \begin{frame}{量子コンパイル}
+%   このinstruction setを仮定すると，
+%   その長さの上限が\(\epsilon\)を用いて与えられる．
+%   \begin{thm}[Solovay・Kitaevの定理]
+%     instruction setに対し，
+%     ある定数\(c\)があって，任意の\(U\in SU(d)\)を
+%     \(\epsilon\)の精度で近似するとき，
+%     近似列の長さは\(O(\log^c(1/\epsilon))\)
+%     に抑えられる．
+%   \end{thm}
+%   このままだと近似列の存在はわかっても，その見つけ方がわからない．
+%   Solovay・Kitaevの定理を用いて，
+%   近似列を見つけるアルゴリズムを与える．
+% \end{frame}
 
 \begin{frame}
   \frametitle{量子コンパイル}
-  以下，\(d=2\)とする．
   \begin{thm}[Solovay・Kitaevアルゴリズム]
     \label{SK algrithm}
     \(\mathcal{G}\subset SU(2)\)をinstruction setとする．
@@ -540,8 +605,8 @@
   \(\epsilon_0 < 1/c^2\)なる定数をとる．
   \begin{exampleblock}
     {Step0: 初期近似列のbrute-force search}
-    \(\epsilon_0\)に対してSolovay・Kitaevの定理を適用し，
-    近似列を長さ\(l_0\)で抑える．
+    \(\epsilon_0\)に対して，
+    ある長さ\(l_0\)が存在して，次を満たす．
     \(U\in SU(2)\)に対し，
     \(\epsilon_0\)近似列
     \(L_0 \in \coprod_{0 < l \leq l_0}\mathcal{G}^l\)
@@ -605,15 +670,18 @@
     < \epsilon_n
   \]
   と評価できる．
-  また，不等式\ref{sk leq}により
+  また，不等式（\ref{sk leq}）により
   \(\epsilon_n < \epsilon_{n-1}\)を満たす．
+  \(\epsilon_0\)は，
+  不等式（\ref{sk leq}）を満たすようにとっていたので，
+  帰納的定義がうまくいっている．
 
-  また，定め方から
+  定理の後半は，手続きの定め方から
   \begin{align*}
     l_n & = 5l_{n-1},                  \\
     t_n & \leq 3t_{n-1} + \text{const}
   \end{align*}
-  であり，後半が成り立つ．（証明終わり）
+  となり，示せる．（証明終わり）
 \end{frame}
 
 \section{まとめ}
@@ -624,24 +692,29 @@
 \begin{frame}
   \frametitle{まとめ}
   \begin{block}{振り返り}
-    トポロジカル量子コンパイルを主題として捉え，
-    一連の流れの中でLHoTT（あるいはQS）を
-    動機付けることがねらいであった．
-  \end{block}
-  \begin{block}{展望}
     \begin{itemize}
-      \item LHoTTの詳細な構文論と意味論
-      \item 安定ホモトピー論
-      \item 状態空間の具体的な構成
-      \item トポロジカル量子計算によるdecoherence耐性の記述
-      \item 共形場理論やChern・Simons理論を含む場の量子論
-      \item 物質のトポロジカル秩序相
-      \item トポロジカル量子計算の形式検証
-            のためのTED-\(K\)理論
-      \item LHoTTのcompanion articles
+      \item 修士論文では，量子コンピュータの誤りを排除する
+            トポロジカル量子コンパイルを主題として捉え，
+            （古典）コンピュータ上で検証するための言語としてLHoTT（あるいはQS）を
+            動機付けることがねらいであった．
+      \item 本発表では，特にトポロジカル量子コンパイルの一般論である
+            量子コンパイルについて，具体的に説明した．
     \end{itemize}
   \end{block}
 \end{frame}
+% \begin{block}{展望}
+%   \begin{itemize}
+%     \item LHoTTの詳細な構文論と意味論
+%     \item 安定ホモトピー論
+%     \item 状態空間の具体的な構成
+%     \item トポロジカル量子計算によるdecoherence耐性の記述
+%     \item 共形場理論やChern・Simons理論を含む場の量子論
+%     \item 物質のトポロジカル秩序相
+%     \item トポロジカル量子計算の形式検証
+%           のためのTED-\(K\)理論
+%     \item LHoTTのcompanion articles
+%   \end{itemize}
+% \end{block}
 
 % \begin{frame}
 %   \frametitle{一枚目のスライド}

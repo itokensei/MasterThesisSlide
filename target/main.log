@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.17.0 (TeX Live 2023)  (format=lualatex 2023.8.25)  28 JAN 2025 23:33
+This is LuaHBTeX, Version 1.17.0 (TeX Live 2023)  (format=lualatex 2023.8.25)  30 JAN 2025 16:44
  restricted system commands enabled.
  file:line:error style messages enabled.
 **/Users/itokensei/Documents/tex/MasterThesisSlide/main.tex
@@ -1184,13 +1184,22 @@ LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
 (Font)              scaled to size 5.77332pt on input line 223.
  [2
 
-] (./target/main.toc) [3
+] [3
 
-] [4
+] (./target/main.toc) [4
 
 ] [5
 
-] [6
+]
+LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
+(Font)              scaled to size 6.73553pt on input line 313.
+LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
+(Font)              scaled to size 6.73553pt on input line 313.
+LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
+(Font)              scaled to size 4.8111pt on input line 313.
+LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
+(Font)              scaled to size 4.8111pt on input line 313.
+ [6
 
 ] [7
 
@@ -1202,39 +1211,36 @@ LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
 
 ] [11
 
-] (./target/main.toc) [12
+] [12
+
+] (./target/main.toc) [13
 
 ]
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 439.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 502.
 (load cache: extra_lmsans10-oblique.luc)
 LaTeX Font Info:    Kanji font shape `JY3/gt/m/it' undefined
-(Font)              No change on input line 439.
- [13
-
-]
-LaTeX Font Info:    Kanji font shape `JY3/gt/m/it' undefined
-(Font)              No change on input line 461.
+(Font)              No change on input line 502.
  [14
 
 ]
 LaTeX Font Info:    Kanji font shape `JY3/gt/m/it' undefined
-(Font)              No change on input line 485.
+(Font)              No change on input line 525.
  [15
 
 ]
 LaTeX Font Info:    Kanji font shape `JY3/gt/m/it' undefined
-(Font)              No change on input line 500.
+(Font)              No change on input line 551.
  [16
 
 ]
 LaTeX Font Info:    Kanji font shape `JY3/gt/m/it' undefined
-(Font)              No change on input line 520.
+(Font)              No change on input line 585.
  [17
 
 ]
 LaTeX Font Info:    Kanji font shape `JY3/gt/m/it' undefined
-(Font)              No change on input line 534.
+(Font)              No change on input line 599.
  [18
 
 ] [19
@@ -1269,19 +1275,19 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 32743 strings out of 477514
- 156557,1977958 words of node,token memory allocated
- 74594 words of node memory still in use:
-   376 hlist, 19 vlist, 210 rule, 8 disc, 15 local_par, 2 math, 628 glue, 39 kern, 61 penalty, 250 glyph, 26216 attribute, 64 glue_spec, 2696 attribute_list, 4 write, 383 user_defined, 567 pdf_literal, 25 pdf_start_link, 25 pdf_end_link, 25 pdf_action, 132 pdf_colorstack nodes
-   avail lists: 1:27,2:15040,3:1404,4:1092,5:209,6:88,7:1925,8:43,9:1266,10:30,11:34
- 52565 multiletter control sequences out of 65536+600000
- 74 fonts using 49593079 bytes
- 128i,20n,116p,2025b,1150s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans12-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-oblique.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans8-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (24 pages, 303618 bytes).
+ 32966 strings out of 477514
+ 195712,1977958 words of node,token memory allocated
+ 61014 words of node memory still in use:
+   314 hlist, 16 vlist, 185 rule, 7 local_par, 497 glue, 30 kern, 43 penalty, 175 glyph, 21480 attribute, 64 glue_spec, 2208 attribute_list, 4 write, 315 user_defined, 496 pdf_literal, 24 pdf_start_link, 24 pdf_end_link, 24 pdf_action, 100 pdf_colorstack nodes
+   avail lists: 1:30,2:31393,3:2361,4:1626,5:215,6:103,7:3891,8:43,9:1837,10:30,11:42
+ 52788 multiletter control sequences out of 65536+600000
+ 78 fonts using 57424151 bytes
+ 128i,21n,116p,2025b,1949s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans12-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-oblique.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans8-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (24 pages, 315849 bytes).
 
-PDF statistics: 2356 PDF objects out of 2487 (max. 8388607)
- 1474 compressed objects within 15 object streams
+PDF statistics: 2286 PDF objects out of 2487 (max. 8388607)
+ 1443 compressed objects within 15 object streams
  55 named destinations out of 1000 (max. 131072)
- 1880 words of extra memory for PDF output out of 10000 (max. 100000000)
+ 1710 words of extra memory for PDF output out of 10000 (max. 100000000)
 
